@@ -13,4 +13,12 @@ class KickassTorrentsSpec extends FlatSpec with Matchers {
 
     kat should be (an[KickassTorrents])
   }
+
+  "A Search" should "return a list of torrents" in {
+    val kat = KAT()
+
+    val torrents = kat.search("game of thrones")
+
+    torrents.length should be (25)
+  }
 }
