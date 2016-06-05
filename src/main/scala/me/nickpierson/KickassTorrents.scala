@@ -1,11 +1,12 @@
-import net.ruippeixotog.scalascraper.browser.JsoupBrowser
+package me.nickpierson
+
+import net.ruippeixotog.scalascraper.browser.{Browser, JsoupBrowser}
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 import net.ruippeixotog.scalascraper.dsl.DSL._
 
-class KickassTorrents {
+class KickassTorrents private[nickpierson] (browser: Browser = JsoupBrowser()) {
 
   def search(query: String) :List[Torrent] = {
-    val browser = JsoupBrowser()
     val search = browser.get(s"https://kat.cr/usearch/$query")
 
     val torrents = search >> elementList("tr[id^=torrent_]")
