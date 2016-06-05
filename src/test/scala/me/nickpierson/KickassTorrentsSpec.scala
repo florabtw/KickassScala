@@ -34,4 +34,14 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
 
     torrents.length should be (25)
   }
+
+  "A Torrent" should "have a name" in {
+    val kat = new KickassTorrents(mockBrowser)
+    (mockBrowser.get _).expects("https://kat.cr/usearch/game of thrones").returning(searchResult)
+
+    val torrents = kat.search("game of thrones")
+
+    torrents.head.name should be ("Game of Thrones S06E06 SUBFRENCH HDTV XviD-ZT avi")
+    torrents.last.name should be ("Game of Thrones Season 2 [720p] x265")
+  }
 }

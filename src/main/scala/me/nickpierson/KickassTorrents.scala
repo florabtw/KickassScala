@@ -12,7 +12,7 @@ class KickassTorrents private[nickpierson] (browser: Browser = JsoupBrowser()) {
     val torrents = search >> elementList("tr[id^=torrent_]")
 
     torrents.map { element =>
-      new Torrent()
+      new Torrent(element >> text("a.cellMainLink"))
     }
   }
 }
