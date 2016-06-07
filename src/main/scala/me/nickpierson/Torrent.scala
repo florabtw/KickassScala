@@ -7,5 +7,6 @@ class Torrent private[nickpierson](val name: String,
                                    val files: Int,
                                    val uploaded: LocalDate,
                                    val seeders: Int,
-                                   val leechers: Int
+                                   val leechers: Int,
+                                   val uploader: String
                                   )

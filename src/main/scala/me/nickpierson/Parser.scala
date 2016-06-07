@@ -26,7 +26,8 @@ private[nickpierson] object Parser {
         (element >> text("td:nth-child(3)")).toInt,
         LocalDate.parse(dateText, formatter),
         (element >> text("td:nth-child(5)")).toInt,
-        (element >> text("td:nth-child(6)")).toInt
+        (element >> text("td:nth-child(6)")).toInt,
+        element >> text("a[href*=user]")
       )
     }
   }

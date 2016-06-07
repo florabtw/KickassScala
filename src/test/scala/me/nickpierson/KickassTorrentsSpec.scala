@@ -84,4 +84,11 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
     torrents.head.leechers should be (885)
     torrents.last.leechers should be (137)
   }
+
+  "A Torrent" should "have an uploader" in {
+    val torrents = gameOfThronesTorrents
+
+    torrents.head.uploader should be ("wassup_bro")
+    torrents.last.uploader should be ("lucifer22")
+  }
 }
