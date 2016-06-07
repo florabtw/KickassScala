@@ -70,4 +70,11 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
     torrents.head.uploaded should be (LocalDate.of(2016, Month.MAY, 30))
     torrents.last.uploaded should be (LocalDate.of(2015, Month.AUGUST, 12))
   }
+
+  "A Torrent" should "have a number of seeders" in {
+    val torrents = gameOfThronesTorrents
+
+    torrents.head.seeders should be (13578)
+    torrents.last.seeders should be (584)
+  }
 }
