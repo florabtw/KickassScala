@@ -1,6 +1,7 @@
 package me.nickpierson
 
 import java.io.File
+import java.time.{Instant, LocalDate, Month}
 
 import net.ruippeixotog.scalascraper.browser.{Browser, JsoupBrowser}
 import org.scalamock.scalatest.MockFactory
@@ -61,5 +62,12 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
 
     torrents.head.numberOfFiles should be (1)
     torrents.last.numberOfFiles should be (12)
+  }
+
+  "A Torrent" should "have an uploaded time" in {
+    val torrents = gameOfThronesTorrents
+
+    torrents.head.uploaded should be (LocalDate.of(2016, Month.MAY, 30))
+    torrents.last.uploaded should be (LocalDate.of(2015, Month.AUGUST, 12))
   }
 }
