@@ -14,6 +14,13 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
   val searchFile = new File(getClass.getResource("/search.html").toURI)
   val searchResult = realBrowser.parseFile(searchFile)
 
+  def gameOfThronesTorrents = {
+    val kat = new KickassTorrents(mockBrowser)
+    (mockBrowser.get _).expects("https://kat.cr/usearch/game of thrones").returning(searchResult)
+
+    kat.search("game of thrones")
+  }
+
   "A KAT" should "be initializable" in {
     val kat = KickassTorrents()
 
@@ -36,12 +43,16 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
   }
 
   "A Torrent" should "have a name" in {
-    val kat = new KickassTorrents(mockBrowser)
-    (mockBrowser.get _).expects("https://kat.cr/usearch/game of thrones").returning(searchResult)
-
-    val torrents = kat.search("game of thrones")
+    val torrents = gameOfThronesTorrents
 
     torrents.head.name should be ("Game of Thrones S06E06 SUBFRENCH HDTV XviD-ZT avi")
     torrents.last.name should be ("Game of Thrones Season 2 [720p] x265")
+  }
+
+  "A Torrent" should "have a size" in {
+    val torrents = gameOfThronesTorrents
+
+    torrents.head.size should be ("541.41 MB")
+    torrents.last.size should be ("1.78 GB")
   }
 }
