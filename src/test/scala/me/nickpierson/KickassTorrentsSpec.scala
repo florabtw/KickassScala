@@ -55,4 +55,11 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
     torrents.head.size should be ("541.41 MB")
     torrents.last.size should be ("1.78 GB")
   }
+
+  "A Torrent" should "indicate number of files" in {
+    val torrents = gameOfThronesTorrents
+
+    torrents.head.numberOfFiles should be (1)
+    torrents.last.numberOfFiles should be (12)
+  }
 }

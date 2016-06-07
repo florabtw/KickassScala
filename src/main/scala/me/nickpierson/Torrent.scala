@@ -1,5 +1,5 @@
 package me.nickpierson
 
-class Torrent private[nickpierson] (val name: String, val size: String) {
+class Torrent private[nickpierson] (val name: String, val size: String, val numberOfFiles: Int) {
 
 }
