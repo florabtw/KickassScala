@@ -77,4 +77,11 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
     torrents.head.seeders should be (13578)
     torrents.last.seeders should be (584)
   }
+
+  "A Torrent" should "have a number of leechers" in {
+    val torrents = gameOfThronesTorrents
+
+    torrents.head.leechers should be (885)
+    torrents.last.leechers should be (137)
+  }
 }
