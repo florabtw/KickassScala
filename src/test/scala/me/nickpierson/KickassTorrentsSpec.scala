@@ -28,7 +28,7 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
     kat should be (an[KickassTorrents])
   }
 
-  "A KAT" should "have a short name" in {
+  it should "have a short name" in {
     val kat = KAT()
 
     kat should be (an[KickassTorrents])
@@ -50,42 +50,42 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
     torrents.last.name should be ("Game of Thrones Season 2 [720p] x265")
   }
 
-  "A Torrent" should "have a size" in {
+  it should "have a size" in {
     val torrents = gameOfThronesTorrents
 
     torrents.head.size should be ("541.41 MB")
     torrents.last.size should be ("1.78 GB")
   }
 
-  "A Torrent" should "have a number of files" in {
+  it should "have a number of files" in {
     val torrents = gameOfThronesTorrents
 
     torrents.head.files should be (1)
     torrents.last.files should be (12)
   }
 
-  "A Torrent" should "have an uploaded time" in {
+  it should "have an uploaded time" in {
     val torrents = gameOfThronesTorrents
 
     torrents.head.uploaded should be (LocalDate.of(2016, Month.MAY, 30))
     torrents.last.uploaded should be (LocalDate.of(2015, Month.AUGUST, 12))
   }
 
-  "A Torrent" should "have a number of seeders" in {
+  it should "have a number of seeders" in {
     val torrents = gameOfThronesTorrents
 
     torrents.head.seeders should be (13578)
     torrents.last.seeders should be (584)
   }
 
-  "A Torrent" should "have a number of leechers" in {
+  it should "have a number of leechers" in {
     val torrents = gameOfThronesTorrents
 
     torrents.head.leechers should be (885)
     torrents.last.leechers should be (137)
   }
 
-  "A Torrent" should "have an uploader" in {
+  it should "have an uploader" in {
     val torrents = gameOfThronesTorrents
 
     torrents.head.uploader should be ("wassup_bro")
