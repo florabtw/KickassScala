@@ -7,6 +7,16 @@ import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.model.{Document, Element}
 
+private object Selectors extends Enumeration {
+  val NAME = Value("a.cellMainLink")
+  val SIZE = Value("td:nth-child(2)")
+  val FILES = Value("td:nth-child(3)")
+  val UPLOADED = Value("td:nth-child(4)")
+  val SEEDERS = Value("td:nth-child(5)")
+  val LEECHERS = Value("td:nth-child(6)")
+  val UPLOADER = Value("a[href*=user]")
+}
+
 private[nickpierson] object Parser {
 
   def parseTorrents(document: Document): List[Torrent] = {
@@ -18,16 +28,16 @@ private[nickpierson] object Parser {
     val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm")
 
     def toTorrent: Torrent = {
-      val dateText = element >> attr("title")("td:nth-child(4)")
+      val dateText = element >> attr("title")(Selectors.UPLOADED.toString)
 
       new Torrent(
-        element >> text("a.cellMainLink"),
-        element >> text("td:nth-child(2)"),
-        (element >> text("td:nth-child(3)")).toInt,
+        element >> text(Selectors.NAME.toString),
+        element >> text(Selectors.SIZE.toString),
+        (element >> text(Selectors.FILES.toString)).toInt,
         LocalDate.parse(dateText, formatter),
-        (element >> text("td:nth-child(5)")).toInt,
-        (element >> text("td:nth-child(6)")).toInt,
-        element >> text("a[href*=user]")
+        (element >> text(Selectors.SEEDERS.toString)).toInt,
+        (element >> text(Selectors.LEECHERS.toString)).toInt,
+        element >> text(Selectors.UPLOADER.toString)
       )
     }
   }
