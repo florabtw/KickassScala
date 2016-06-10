@@ -15,6 +15,7 @@ private object Selectors extends Enumeration {
   val SEEDERS = Value("td:nth-child(5)")
   val LEECHERS = Value("td:nth-child(6)")
   val UPLOADER = Value("a[href*=user]")
+  val NUMBER_OF_COMMENTS = Value("a.icommentjs")
   val IS_VERIFIED = Value("a[title=Verified Torrent]")
 }
 
@@ -39,6 +40,7 @@ private[nickpierson] object Parser {
         (el >>  text(Selectors.SEEDERS.toString)).toInt,
         (el >>  text(Selectors.LEECHERS.toString)).toInt,
          el >>  text(Selectors.UPLOADER.toString),
+        (el >?> text(Selectors.NUMBER_OF_COMMENTS.toString)).map(_.toInt).getOrElse(0),
         (el >?> element(Selectors.IS_VERIFIED.toString)).isDefined
       )
     }

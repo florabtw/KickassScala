@@ -92,6 +92,14 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
     torrents.last.uploader should be ("lucifer22")
   }
 
+  it should "have a number of comments" in {
+    val torrents = gameOfThronesTorrents
+
+    torrents.head.numberOfComments should be (57)
+    torrents(17).numberOfComments should be (0)
+    torrents.last.numberOfComments should be (41)
+  }
+
   it should "have a verified flag" in {
     val torrents = gameOfThronesTorrents
 
