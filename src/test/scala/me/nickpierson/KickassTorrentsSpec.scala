@@ -106,4 +106,11 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
     torrents.head.isVerified should be (true)
     torrents.last.isVerified should be (false)
   }
+
+  it should "have a magnet link" in {
+    val torrents = gameOfThronesTorrents
+
+    torrents.head.magnetLink should be ("magnet:?xt=urn:btih:12345")
+    torrents.last.magnetLink should be ("magnet:?xt=urn:btih:56789")
+  }
 }
