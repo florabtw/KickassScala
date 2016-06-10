@@ -8,5 +8,6 @@ class Torrent private[nickpierson](val name: String,
                                    val uploaded: LocalDate,
                                    val seeders: Int,
                                    val leechers: Int,
-                                   val uploader: String
+                                   val uploader: String,
+                                   val isVerified: Boolean
                                   )

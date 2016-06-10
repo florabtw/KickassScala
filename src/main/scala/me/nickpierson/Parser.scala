@@ -15,6 +15,7 @@ private object Selectors extends Enumeration {
   val SEEDERS = Value("td:nth-child(5)")
   val LEECHERS = Value("td:nth-child(6)")
   val UPLOADER = Value("a[href*=user]")
+  val IS_VERIFIED = Value("a[title=Verified Torrent]")
 }
 
 private[nickpierson] object Parser {
@@ -24,20 +25,21 @@ private[nickpierson] object Parser {
     torrents.map(_.toTorrent)
   }
 
-  implicit class ElementToTorrent(element: Element) {
+  implicit class ElementToTorrent(el: Element) {
     val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm")
 
     def toTorrent: Torrent = {
-      val dateText = element >> attr("title")(Selectors.UPLOADED.toString)
+      val dateText = el >> attr("title")(Selectors.UPLOADED.toString)
 
       new Torrent(
-        element >> text(Selectors.NAME.toString),
-        element >> text(Selectors.SIZE.toString),
-        (element >> text(Selectors.FILES.toString)).toInt,
+         el >>  text(Selectors.NAME.toString),
+         el >>  text(Selectors.SIZE.toString),
+        (el >>  text(Selectors.FILES.toString)).toInt,
         LocalDate.parse(dateText, formatter),
-        (element >> text(Selectors.SEEDERS.toString)).toInt,
-        (element >> text(Selectors.LEECHERS.toString)).toInt,
-        element >> text(Selectors.UPLOADER.toString)
+        (el >>  text(Selectors.SEEDERS.toString)).toInt,
+        (el >>  text(Selectors.LEECHERS.toString)).toInt,
+         el >>  text(Selectors.UPLOADER.toString),
+        (el >?> element(Selectors.IS_VERIFIED.toString)).isDefined
       )
     }
   }
