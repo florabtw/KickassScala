@@ -113,4 +113,11 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
     torrents.head.magnetLink should be ("magnet:?xt=urn:btih:12345")
     torrents.last.magnetLink should be ("magnet:?xt=urn:btih:56789")
   }
+
+  it should "have a download link" in {
+    val torrents = gameOfThronesTorrents
+
+    torrents.head.downloadLink should be ("https://torcache.net/torrent/12345.torrent")
+    torrents.last.downloadLink should be ("https://torcache.net/torrent/56789.torrent")
+  }
 }

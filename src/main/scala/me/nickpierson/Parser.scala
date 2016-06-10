@@ -18,6 +18,7 @@ private object Selectors extends Enumeration {
   val NUMBER_OF_COMMENTS = Value("a.icommentjs")
   val IS_VERIFIED = Value("a[title=Verified Torrent]")
   val MAGNET_LINK = Value("a[title=Torrent magnet link]")
+  val DOWNLOAD_LINK = Value("a[title=Download torrent file]")
 }
 
 private[nickpierson] object Parser {
@@ -43,7 +44,8 @@ private[nickpierson] object Parser {
          el >>  text(Selectors.UPLOADER.toString),
         (el >?> text(Selectors.NUMBER_OF_COMMENTS.toString)).map(_.toInt).getOrElse(0),
         (el >?> element(Selectors.IS_VERIFIED.toString)).isDefined,
-         el >>  attr("href")(Selectors.MAGNET_LINK.toString)
+         el >>  attr("href")(Selectors.MAGNET_LINK.toString),
+         el >>  attr("href")(Selectors.DOWNLOAD_LINK.toString)
       )
     }
   }

@@ -11,5 +11,6 @@ class Torrent private[nickpierson](val name: String,
                                    val uploader: String,
                                    val numberOfComments: Int,
                                    val isVerified: Boolean,
-                                   val magnetLink: String
+                                   val magnetLink: String,
+                                   val downloadLink: String
                                   )
