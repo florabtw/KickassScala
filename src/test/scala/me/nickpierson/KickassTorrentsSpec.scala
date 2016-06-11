@@ -15,11 +15,11 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
   val searchFile = new File(getClass.getResource("/search.html").toURI)
   val searchResult = realBrowser.parseFile(searchFile)
 
-  def gameOfThronesTorrents = {
+  def elementaryOSTorrents = {
     val kat = new KickassTorrents(mockBrowser)
-    (mockBrowser.get _).expects("https://kat.cr/usearch/game of thrones").returning(searchResult)
+    (mockBrowser.get _).expects("https://kat.cr/usearch/elementary os").returning(searchResult)
 
-    kat.search("game of thrones")
+    kat.search("elementary os")
   }
 
   "A KAT" should "be initializable" in {
@@ -36,86 +36,86 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
 
   "A Search" should "return a list of torrents" in {
     val kat = new KickassTorrents(mockBrowser)
-    (mockBrowser.get _).expects("https://kat.cr/usearch/game of thrones").returning(searchResult)
+    (mockBrowser.get _).expects("https://kat.cr/usearch/elementary os").returning(searchResult)
 
-    val torrents = kat.search("game of thrones")
+    val torrents = kat.search("elementary os")
 
-    torrents.length should be (25)
+    torrents.length should be (3)
   }
 
   "A Torrent" should "have a name" in {
-    val torrents = gameOfThronesTorrents
+    val torrents = elementaryOSTorrents
 
-    torrents.head.name should be ("Game of Thrones S06E06 SUBFRENCH HDTV XviD-ZT avi")
-    torrents.last.name should be ("Game of Thrones Season 2 [720p] x265")
+    torrents.head.name should be ("Elementary OS Freya 64 Bit")
+    torrents.last.name should be ("Elementary OS 0.3.1 64-bit")
   }
 
   it should "have a size" in {
-    val torrents = gameOfThronesTorrents
+    val torrents = elementaryOSTorrents
 
-    torrents.head.size should be ("541.41 MB")
-    torrents.last.size should be ("1.78 GB")
+    torrents.head.size should be ("852 MB")
+    torrents.last.size should be ("867 MB")
   }
 
   it should "have a number of files" in {
-    val torrents = gameOfThronesTorrents
+    val torrents = elementaryOSTorrents
 
     torrents.head.files should be (1)
-    torrents.last.files should be (12)
+    torrents.last.files should be (2)
   }
 
   it should "have an uploaded time" in {
-    val torrents = gameOfThronesTorrents
+    val torrents = elementaryOSTorrents
 
-    torrents.head.uploaded should be (LocalDate.of(2016, Month.MAY, 30))
-    torrents.last.uploaded should be (LocalDate.of(2015, Month.AUGUST, 12))
+    torrents.head.uploaded should be (LocalDate.of(2015, Month.APRIL, 11))
+    torrents.last.uploaded should be (LocalDate.of(2015, Month.NOVEMBER, 22))
   }
 
   it should "have a number of seeders" in {
-    val torrents = gameOfThronesTorrents
+    val torrents = elementaryOSTorrents
 
-    torrents.head.seeders should be (13578)
-    torrents.last.seeders should be (584)
+    torrents.head.seeders should be (5)
+    torrents.last.seeders should be (0)
   }
 
   it should "have a number of leechers" in {
-    val torrents = gameOfThronesTorrents
+    val torrents = elementaryOSTorrents
 
-    torrents.head.leechers should be (885)
-    torrents.last.leechers should be (137)
+    torrents.head.leechers should be (0)
+    torrents.last.leechers should be (0)
   }
 
   it should "have an uploader" in {
-    val torrents = gameOfThronesTorrents
+    val torrents = elementaryOSTorrents
 
-    torrents.head.uploader should be ("wassup_bro")
-    torrents.last.uploader should be ("lucifer22")
+    torrents.head.uploader should be ("relmania")
+    torrents.last.uploader should be ("Router1011")
   }
 
   it should "have a number of comments" in {
-    val torrents = gameOfThronesTorrents
+    val torrents = elementaryOSTorrents
 
-    torrents.head.numberOfComments should be (57)
-    torrents(17).numberOfComments should be (0)
-    torrents.last.numberOfComments should be (41)
+    torrents.head.numberOfComments should be (117)
+    torrents(1).numberOfComments should be (0)
+    torrents.last.numberOfComments should be (1)
   }
 
   it should "have a verified flag" in {
-    val torrents = gameOfThronesTorrents
+    val torrents = elementaryOSTorrents
 
     torrents.head.isVerified should be (true)
     torrents.last.isVerified should be (false)
   }
 
   it should "have a magnet link" in {
-    val torrents = gameOfThronesTorrents
+    val torrents = elementaryOSTorrents
 
     torrents.head.magnetLink should be ("magnet:?xt=urn:btih:12345")
     torrents.last.magnetLink should be ("magnet:?xt=urn:btih:56789")
   }
 
   it should "have a download link" in {
-    val torrents = gameOfThronesTorrents
+    val torrents = elementaryOSTorrents
 
     torrents.head.downloadLink should be ("https://torcache.net/torrent/12345.torrent")
     torrents.last.downloadLink should be ("https://torcache.net/torrent/56789.torrent")
