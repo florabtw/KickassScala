@@ -41,7 +41,7 @@ private[nickpierson] object Parser {
         LocalDate.parse(dateText, formatter),
         (el >>  text(Selectors.SEEDERS.toString)).toInt,
         (el >>  text(Selectors.LEECHERS.toString)).toInt,
-         el >>  text(Selectors.UPLOADER.toString),
+         el >?> text(Selectors.UPLOADER.toString),
         (el >?> text(Selectors.NUMBER_OF_COMMENTS.toString)).map(_.toInt).getOrElse(0),
         (el >?> element(Selectors.IS_VERIFIED.toString)).isDefined,
          el >>  attr("href")(Selectors.MAGNET_LINK.toString),

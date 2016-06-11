@@ -85,11 +85,12 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
     torrents.last.leechers should be (0)
   }
 
-  it should "have an uploader" in {
+  it should "have an optional uploader" in {
     val torrents = elementaryOSTorrents
 
-    torrents.head.uploader should be ("relmania")
-    torrents.last.uploader should be ("Router1011")
+    torrents.head.uploader should be (Some("realmania"))
+    torrents(1).uploader should be (None)
+    torrents.last.uploader should be (Some("Router1011"))
   }
 
   it should "have a number of comments" in {
