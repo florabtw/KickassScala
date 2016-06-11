@@ -17,7 +17,7 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
 
   def elementaryOSTorrents = {
     val kat = new KickassTorrents(mockBrowser)
-    (mockBrowser.get _).expects("https://kat.cr/usearch/elementary os").returning(searchResult)
+    (mockBrowser.get _).expects("https://kat.cr/usearch/elementary os/").returning(searchResult)
 
     kat.search("elementary os")
   }
@@ -36,9 +36,18 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
 
   "A Search" should "return a list of torrents" in {
     val kat = new KickassTorrents(mockBrowser)
-    (mockBrowser.get _).expects("https://kat.cr/usearch/elementary os").returning(searchResult)
+    (mockBrowser.get _).expects("https://kat.cr/usearch/elementary os/").returning(searchResult)
 
     val torrents = kat.search("elementary os")
+
+    torrents.length should be (3)
+  }
+
+  it should "have pages" in {
+    val kat = new KickassTorrents(mockBrowser)
+    (mockBrowser.get _).expects("https://kat.cr/usearch/elementary os/2/").returning(searchResult)
+
+    val torrents = kat.search("elementary os", page = 2)
 
     torrents.length should be (3)
   }
