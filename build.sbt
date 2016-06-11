@@ -9,3 +9,4 @@ libraryDependencies += "org.scalatest"    %% "scalatest"                   % "2.
 libraryDependencies += "org.scalamock"    %% "scalamock-scalatest-support" % "3.2.2" % "test"
 
 libraryDependencies += "net.ruippeixotog" %% "scala-scraper" % "1.0.0"
+libraryDependencies += "com.netaporter"   %% "scala-uri"     % "0.4.14"

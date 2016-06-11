@@ -1,9 +1,10 @@
 package me.nickpierson
 
 import java.io.File
-import java.time.{Instant, LocalDate, Month}
+import java.time.{LocalDate, Month}
 
 import net.ruippeixotog.scalascraper.browser.{Browser, JsoupBrowser}
+import com.netaporter.uri.dsl._
 import org.scalamock.scalatest.MockFactory
 import org.scalatest._
 
@@ -15,9 +16,11 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
   val searchFile = new File(getClass.getResource("/search.html").toURI)
   val searchResult = realBrowser.parseFile(searchFile)
 
+  val defaultUrl: String = "https://kat.cr/usearch" / "elementary os" / "1" ? ("field" -> "seeders")
+
   def elementaryOSTorrents = {
     val kat = new KickassTorrents(mockBrowser)
-    (mockBrowser.get _).expects("https://kat.cr/usearch/elementary os/").returning(searchResult)
+    (mockBrowser.get _).expects(defaultUrl).returning(searchResult)
 
     kat.search("elementary os")
   }
@@ -36,7 +39,7 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
 
   "A Search" should "return a list of torrents" in {
     val kat = new KickassTorrents(mockBrowser)
-    (mockBrowser.get _).expects("https://kat.cr/usearch/elementary os/").returning(searchResult)
+    (mockBrowser.get _).expects(defaultUrl).returning(searchResult)
 
     val torrents = kat.search("elementary os")
 
@@ -45,11 +48,25 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
 
   it should "have pages" in {
     val kat = new KickassTorrents(mockBrowser)
-    (mockBrowser.get _).expects("https://kat.cr/usearch/elementary os/2/").returning(searchResult)
+    val page2Url = defaultUrl.replace("/1", "/2")
+    (mockBrowser.get _).expects(page2Url).returning(searchResult)
 
-    val torrents = kat.search("elementary os", page = 2)
+    kat.search("elementary os", page = 2)
+  }
 
-    torrents.length should be (3)
+  it should "order by seeders by default" in {
+    val kat = new KickassTorrents(mockBrowser)
+    (mockBrowser.get _).expects(defaultUrl).returning(searchResult)
+
+    kat.search("elementary os", field = Field.SEEDERS)
+  }
+
+  it should "order by size" in {
+    val kat = new KickassTorrents(mockBrowser)
+    val orderBySizeUrl: String = defaultUrl.replaceParams("field", "size")
+    (mockBrowser.get _).expects(orderBySizeUrl).returning(searchResult)
+
+    kat.search("elementary os", field = Field.SIZE)
   }
 
   "A Torrent" should "have a name" in {

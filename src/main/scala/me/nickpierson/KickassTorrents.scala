@@ -1,12 +1,22 @@
 package me.nickpierson
 
 import net.ruippeixotog.scalascraper.browser.{Browser, JsoupBrowser}
+import com.netaporter.uri.dsl._
+
+private[nickpierson] object Field extends Enumeration {
+  type Field = Field.Value
+
+  val SIZE = Value("size")
+  val SEEDERS = Value("seeders")
+}
 
 class KickassTorrents private[nickpierson] (browser: Browser = JsoupBrowser()) {
+  import Field._
 
-  def search(query: String, page: Int = 1): List[Torrent] = {
-    val pageParam = if (page == 1) "" else s"$page/"
-    val search = browser.get(s"https://kat.cr/usearch/$query/$pageParam")
+  def search(query: String, page: Int = 1, field: Field = SEEDERS): List[Torrent] = {
+    val url = "https://kat.cr/usearch" / query / page.toString ? ("field" -> field.toString)
+
+    val search = browser.get(url)
 
     Parser.parseTorrents(search)
   }
