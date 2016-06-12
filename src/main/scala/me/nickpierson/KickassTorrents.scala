@@ -13,11 +13,19 @@ private[nickpierson] object Field extends Enumeration {
   val LEECHERS = Value("leechers")
 }
 
+private [nickpierson] object Order extends Enumeration {
+  type Order = Order.Value
+
+  val DESC = Value("desc")
+  val ASC = Value("asc")
+}
+
 class KickassTorrents private[nickpierson] (browser: Browser = JsoupBrowser()) {
   import Field._
+  import Order._
 
-  def search(query: String, page: Int = 1, field: Field = SEEDERS): List[Torrent] = {
-    val url = "https://kat.cr/usearch" / query / page.toString ? ("field" -> field.toString)
+  def search(query: String, page: Int = 1, field: Field = SEEDERS, order: Order = DESC): List[Torrent] = {
+    val url = "https://kat.cr/usearch" / query / page.toString ? ("field" -> field) & ("sorder" -> order)
 
     val search = browser.get(url)
 
