@@ -8,6 +8,9 @@ private[nickpierson] object Field extends Enumeration {
 
   val SIZE = Value("size")
   val SEEDERS = Value("seeders")
+  val FILES = Value("files_count")
+  val AGE = Value("time_add")
+  val LEECHERS = Value("leechers")
 }
 
 class KickassTorrents private[nickpierson] (browser: Browser = JsoupBrowser()) {

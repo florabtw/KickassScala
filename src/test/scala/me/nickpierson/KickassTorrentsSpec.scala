@@ -58,7 +58,7 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
     val kat = new KickassTorrents(mockBrowser)
     (mockBrowser.get _).expects(defaultUrl).returning(searchResult)
 
-    kat.search("elementary os", field = Field.SEEDERS)
+    kat.search("elementary os")
   }
 
   it should "order by size" in {
@@ -67,6 +67,37 @@ class KickassTorrentsSpec extends FlatSpec with Matchers with MockFactory {
     (mockBrowser.get _).expects(orderBySizeUrl).returning(searchResult)
 
     kat.search("elementary os", field = Field.SIZE)
+  }
+
+  it should "order by files" in {
+    val kat = new KickassTorrents(mockBrowser)
+    val orderByFilesUrl: String = defaultUrl.replaceParams("field", "files_count")
+    (mockBrowser.get _).expects(orderByFilesUrl).returning(searchResult)
+
+    kat.search("elementary os", field = Field.FILES)
+  }
+
+  it should "order by age" in {
+    val kat = new KickassTorrents(mockBrowser)
+    val orderByAgeUrl: String = defaultUrl.replaceParams("field", "time_add")
+    (mockBrowser.get _).expects(orderByAgeUrl).returning(searchResult)
+
+    kat.search("elementary os", field = Field.AGE)
+  }
+
+  it should "order by seeders" in {
+    val kat = new KickassTorrents(mockBrowser)
+    (mockBrowser.get _).expects(defaultUrl).returning(searchResult)
+
+    kat.search("elementary os", field = Field.SEEDERS)
+  }
+
+  it should "order by leechers" in  {
+    val kat = new KickassTorrents(mockBrowser)
+    val orderByLeechersUrl: String = defaultUrl.replaceParams("field", "leechers")
+    (mockBrowser.get _).expects(orderByLeechersUrl).returning(searchResult)
+
+    kat.search("elementary os", field = Field.LEECHERS)
   }
 
   "A Torrent" should "have a name" in {
