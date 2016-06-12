@@ -3,7 +3,7 @@ package me.nickpierson
 import net.ruippeixotog.scalascraper.browser.{Browser, JsoupBrowser}
 import com.netaporter.uri.dsl._
 
-private[nickpierson] object Field extends Enumeration {
+object Field extends Enumeration {
   type Field = Field.Value
 
   val SIZE = Value("size")
@@ -13,7 +13,7 @@ private[nickpierson] object Field extends Enumeration {
   val LEECHERS = Value("leechers")
 }
 
-private [nickpierson] object Order extends Enumeration {
+object Order extends Enumeration {
   type Order = Order.Value
 
   val DESC = Value("desc")
