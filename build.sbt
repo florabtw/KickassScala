@@ -1,6 +1,8 @@
-name := "KickassScala"
+organization := "me.nickpierson"
 
-version := "1.0"
+name := "kickass-scala"
+
+version := "0.1"
 
 scalaVersion := "2.11.8"
 
